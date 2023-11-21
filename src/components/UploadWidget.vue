@@ -9,7 +9,10 @@ const uploadPhotos = ref([])
 const widget = window.cloudinary.createUploadWidget(
   {
     cloud_name: import.meta.env.VITE_APP_CLOUD_NAME,
-    upload_preset: import.meta.env.VITE_APP_UPLOAD_PRESET
+    upload_preset: import.meta.env.VITE_APP_UPLOAD_PRESET,
+    cropping: true,
+    showSkipCropButton: false,
+    croppingAspectRatio: 1
   },
   (error, result) => {
     if (!error && result && result.event === 'success') {
@@ -22,8 +25,12 @@ const widget = window.cloudinary.createUploadWidget(
 
 <template>
   <button @click="widget.open()">Subir imágenes</button>
-  <p>URL: {{ uploadPhotos ? uploadPhotos.map((u) => u.secure_url) : '' }}</p>
-  <img :key="u.id" v-for="u in uploadPhotos" :src="u.secure_url" alt="" />
+  <img
+    :key="u.id"
+    v-for="u in uploadPhotos"
+    :src="u.secure_url.replace('/upload/', '/upload/c_crop,g_custom/')"
+    alt=""
+  />
 </template>
 
 <style scoped></style>
