@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 // dotenv.config()
 
-const uploadPhotos = ref([])
+const uploadedPhotos = ref([])
 
 const widget = window.cloudinary.createUploadWidget(
   {
@@ -17,7 +17,7 @@ const widget = window.cloudinary.createUploadWidget(
   (error, result) => {
     if (!error && result && result.event === 'success') {
       console.log('Done uploading...', result.info)
-      uploadPhotos.value.push(result.info)
+      uploadedPhotos.value.push(result.info)
     }
   }
 )
@@ -25,9 +25,10 @@ const widget = window.cloudinary.createUploadWidget(
 
 <template>
   <button @click="widget.open()">Subir imágenes</button>
+  <p>{{ uploadedPhotos.map((u) => u.secure_url) }}</p>
   <img
     :key="u.id"
-    v-for="u in uploadPhotos"
+    v-for="u in uploadedPhotos"
     :src="u.secure_url.replace('/upload/', '/upload/c_crop,g_custom/')"
     alt=""
   />

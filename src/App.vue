@@ -3,8 +3,10 @@ import UploadWidget from './components/UploadWidget.vue'
 </script>
 
 <template>
-  <h2>¡Sube tus propias imágenes!</h2>
-  <UploadWidget />
+  <div>
+    <h2>¡Sube tus propias imágenes!</h2>
+    <UploadWidget />
+  </div>
 </template>
 
 <style scoped></style>
